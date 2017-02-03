@@ -4,20 +4,21 @@ MAINTAINER Thibault NORMAND  <me@zenithar.org>
 RUN apk add --update \
     build-base autoconf automake libtool \
     python python-dev py-pip \
-    openssl-dev pcre-dev jansson-dev \
-    git \
-    swig file \
+    openssl openssl-dev pcre-dev jansson-dev \
+    git ca-certificates\
+    swig file libffi libffi-dev \
+    && update-ca-certificates \
     && pip install virtualenv PySocks SQLAlchemy PrettyTable python-magic \
     && rm -rf /var/cache/apk/*
 
-RUN wget http://downloads.sourceforge.net/project/ssdeep/ssdeep-2.10/ssdeep-2.10.tar.gz \
-    && tar zxvf ssdeep-2.10.tar.gz \
-    && cd ssdeep-2.10 \
+RUN wget http://downloads.sourceforge.net/project/ssdeep/ssdeep-2.13/ssdeep-2.13.tar.gz \
+    && tar zxvf ssdeep-2.13.tar.gz \
+    && cd ssdeep-2.13 \
     && ./configure --prefix=/usr \
     && make \
     && make install \
     && cd .. \
-    && rm -rf ssdeep-2.10*
+    && rm -rf ssdeep-2.13*
 
 RUN wget https://github.com/plusvic/yara/archive/v3.4.0.tar.gz \
     && tar zxvf v3.4.0.tar.gz \
